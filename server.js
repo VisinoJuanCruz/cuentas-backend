@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const cors = require('cors');
 
-mongoose.connect(process.env.MONGODB_URL).then(()=>{
+const MONGODB_URL= `mongodb+srv://${process.env.USERDATABASE}:${process.env.PASSWORDDATABASE}@cluster0.ft1s0cc.mongodb.net/cuentas`
+
+mongoose.connect(MONGODB_URL).then(()=>{
     console.log('Connected to MongoDB');
 
 })
