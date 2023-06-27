@@ -78,7 +78,6 @@ app.put("/api/personas/", async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log({process})
     console.log(`Server is running on port ${port}`);
     
 })
