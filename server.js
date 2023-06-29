@@ -96,6 +96,8 @@ app.post("/api/personas", async (req, res) => {
         name:person.name,
         spent:0,
         owe:0,
+        motive:person.motive,
+        date: new Date()
     
     }).then((createdPerson)=>{
         res.status(201).json(createdPerson)
@@ -109,7 +111,10 @@ app.put("/api/personas/", async (req, res) => {
         name:person.name,
         spent:person.spent,
         owe:person.owe,
-        motive:person.motive
+        motive:person.motive,
+        date: new Date()
+
+    
 
     }).then((createdMove)=>{
         res.status(201).json(createdMove)
