@@ -87,7 +87,7 @@ app.post("/api/personas", async (req, res) => {
 
 app.post("/api/personas", async (req, res) => {
     const person = req.body
-    console.log(person)
+    console.log(person,"NUEVO MOVIMIENTO")
     
     Move.create({
         name:person.name,
@@ -101,7 +101,6 @@ app.post("/api/personas", async (req, res) => {
 
 app.put("/api/personas/", async (req, res) => {
     const person = req.body;
-    console.log(person);
   
     Move.create({
         name:person.name,
