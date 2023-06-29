@@ -22,6 +22,15 @@ const personSchema = new Schema({
 
 const Person = mongoose.model('Person', personSchema, "Persons");
 
+const movesSchema = new Schema({
+    name: String,
+    spent: Number,
+    owe: Number,
+}
+)
+
+const Moves = mongoose.model('Moves', movesSchema, "Moves");
+
 
 
 //Middlewares
@@ -38,6 +47,13 @@ app.get("/api/personas", async (req, res) => {
     }
     )
 })
+
+app.get("/api/moves", async (req, res) => {
+    Moves.find().then((moves)=>{
+        res.status(200).json(moves)
+    })
+})
+
 
 app.post("/api/personas", async (req, res) => {
     const person = req.body
@@ -57,6 +73,13 @@ app.put("/api/personas/", async (req, res) => {
     const person = req.body;
     console.log(person);
   
+    Moves.create({
+        name:person.name,
+        spent:person.spent,
+        owe:person.owe,
+
+    })
+
     try {
       const updatedPerson = await Person
       .findByIdAndUpdate(person.id, {
