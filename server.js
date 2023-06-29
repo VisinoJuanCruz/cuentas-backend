@@ -22,14 +22,14 @@ const personSchema = new Schema({
 
 const Person = mongoose.model('Person', personSchema, "Persons");
 
-const movesSchema = new Schema({
+const moveSchema = new Schema({
     name: String,
     spent: Number,
     owe: Number,
 }
 )
 
-const Move = mongoose.model('Move', movesSchema, "Move");
+const Move = mongoose.model('Move', moveSchema, "Move");
 
 
 
@@ -56,12 +56,12 @@ app.get("/api/moves", async (req, res) => {
 
 app.post("/api/moves", async (req, res) => {
     const person = req.body
-    console.log(person)
+    console.log(person,"NUEVO MOVIMIENTO")
     
     Move.create({
         name:person.name,
-        spent:0,
-        owe:0,
+        spent:person.spent,
+        owe:person.owe,
     
     }).then((createdMove)=>{
         res.status(201).json(createdMove)
@@ -121,7 +121,6 @@ app.put("/api/personas/", async (req, res) => {
       });
   
       console.log("Finish update");
-      console.log(updatedPerson);
       res.status(200).json(updatedPerson);
     } catch (error) {
       console.error("Error al actualizar los valores:", error);
