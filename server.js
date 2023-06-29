@@ -56,7 +56,7 @@ app.get("/api/moves", async (req, res) => {
 
 app.post("/api/moves", async (req, res) => {
     const person = req.body
-    console.log(person,"NUEVO MOVIMIENTO")
+    console.log(person,"NUEVO MOV")
     
     Move.create({
         name:person.name,
@@ -73,7 +73,7 @@ app.post("/api/moves", async (req, res) => {
 
 app.post("/api/personas", async (req, res) => {
     const person = req.body
-    console.log(person)
+    console.log(person.name)
     
     Person.create({
         name:person.name,
@@ -103,7 +103,7 @@ app.put("/api/personas/", async (req, res) => {
     const person = req.body;
     console.log(person);
   
-    Moves.create({
+    Move.create({
         name:person.name,
         spent:person.spent,
         owe:person.owe,
