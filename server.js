@@ -26,6 +26,7 @@ const moveSchema = new Schema({
     name: String,
     spent: Number,
     owe: Number,
+    motive: String,
 }
 )
 
@@ -56,7 +57,6 @@ app.get("/api/moves", async (req, res) => {
 
 app.post("/api/moves", async (req, res) => {
     const person = req.body
-    console.log(person,"NUEVO MOV")
     
     Move.create({
         name:person.name,
@@ -106,6 +106,7 @@ app.put("/api/personas/", async (req, res) => {
         name:person.name,
         spent:person.spent,
         owe:person.owe,
+        motive:person.motive
 
     }).then((createdMove)=>{
         res.status(201).json(createdMove)
