@@ -29,7 +29,7 @@ const movesSchema = new Schema({
 }
 )
 
-const Moves = mongoose.model('Moves', movesSchema, "Moves");
+const Move = mongoose.model('Move', movesSchema, "Move");
 
 
 
@@ -49,10 +49,26 @@ app.get("/api/personas", async (req, res) => {
 })
 
 app.get("/api/moves", async (req, res) => {
-    Moves.find().then((moves)=>{
+    Move.find().then((moves)=>{
         res.status(200).json(moves)
     })
 })
+
+app.post("/api/moves", async (req, res) => {
+    const person = req.body
+    console.log(person)
+    
+    Move.create({
+        name:person.name,
+        spent:0,
+        owe:0,
+    
+    }).then((createdMove)=>{
+        res.status(201).json(createdMove)
+    })
+})
+
+
 
 
 app.post("/api/personas", async (req, res) => {
@@ -60,6 +76,20 @@ app.post("/api/personas", async (req, res) => {
     console.log(person)
     
     Person.create({
+        name:person.name,
+        spent:0,
+        owe:0,
+    
+    }).then((createdPerson)=>{
+        res.status(201).json(createdPerson)
+    })
+})
+
+app.post("/api/personas", async (req, res) => {
+    const person = req.body
+    console.log(person)
+    
+    Move.create({
         name:person.name,
         spent:0,
         owe:0,
@@ -78,6 +108,8 @@ app.put("/api/personas/", async (req, res) => {
         spent:person.spent,
         owe:person.owe,
 
+    }).then((createdMove)=>{
+        res.status(201).json(createdMove)
     })
 
     try {
