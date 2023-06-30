@@ -95,6 +95,26 @@ app.delete("/api/moves/:id", async (req, res) => {
     
 });
 
+app.post("/api/personas/today", async (req, res) => {
+
+        const person = req.body
+
+        Person.updateMany({},{
+            spent:0,
+            owe:0,
+            }).then((updatedPerson)=>{
+                res.status(201).json(updatedPerson)
+                })
+        Person.findOneAndUpdate({name:person.name},{
+            spent:person.spent,}
+            ).then((updatedPerson)=>{
+                res.status(201).json(updatedPerson)
+                }
+        
+)})
+        
+    
+
 
 app.post("/api/personas", async (req, res) => {
     const person = req.body
@@ -102,8 +122,8 @@ app.post("/api/personas", async (req, res) => {
     
     Person.create({
         name:person.name,
-        spent:0,
-        owe:0,
+        spent:person.spent,
+        owe:person.owe,
     
     }).then((createdPerson)=>{
         res.status(201).json(createdPerson)
