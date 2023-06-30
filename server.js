@@ -105,13 +105,22 @@ app.post("/api/personas/today", async (req, res) => {
             }).then((updatedPerson)=>{
                 res.status(201).json(updatedPerson)
                 })
-        Person.findOneAndUpdate({name:person.name},{
-            spent:person.spent,}
-            ).then((updatedPerson)=>{
-                res.status(201).json(updatedPerson)
+                try {
+                    const updatedPerson = await Person
+                    .find({name:person.name}, {
+                          spent: parseInt(person.spent),
+                           owe: parseInt(person.owe) ,
+                    });
+                
+                    console.log("Finish update");
+                    res.status(200).json(updatedPerson);
+                  } catch (error) {
+                    console.error("Error al actualizar los valores:", error);
+                    res.status(500).json({ error: "Error al actualizar los valores" });
+                  }
                 }
-        
-)})
+
+)
         
     
 
