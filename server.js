@@ -97,28 +97,27 @@ app.delete("/api/moves/:id", async (req, res) => {
 
 app.post("/api/personas/today", async (req, res) => {
 
-        const person = req.body
+        const { name, owe } = req.body;
 
-        Person.updateMany({},{
-            spent:0,
-            owe:0,
-            }).then((updatedPerson)=>{
-                res.status(201).json(updatedPerson)
-                })
-                try {
-                    const updatedPerson = await Person
-                    .find({name:person.name}, {
-                          spent: parseInt(person.spent),
-                           owe: parseInt(person.owe) ,
-                    });
-                
-                    console.log("Finish update");
-                    res.status(200).json(updatedPerson);
-                  } catch (error) {
-                    console.error("Error al actualizar los valores:", error);
-                    res.status(500).json({ error: "Error al actualizar los valores" });
-                  }
-                }
+        Person.updateMany(
+            { name: { $ne: name } }, // Filtrar todas las personas excepto la proporcionada en req.body.name
+            { $set: { spent: 0, owe: 0 } } // Establecer spent en 0 y owe en 0
+          )
+            .then(() => {
+              // Actualizar la persona especificada en req.body.name
+              return Person.findOneAndUpdate(
+                { name: name },
+                { $set: { spent: 0, owe: owe } }
+              );
+            })
+            .then(() => {
+              res.send(`Se actualizó el campo "spent" y "owe" de todas las personas a 0, excepto para ${name} con spent en 0 y owe en ${owe}.`);
+            })
+            .catch((error) => {
+              console.error('Error al resetear las personas:', error);
+              res.status(500).send('Error al resetear las personas.');
+            });
+            }
 
 )
         
