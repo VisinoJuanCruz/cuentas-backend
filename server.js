@@ -99,28 +99,27 @@ app.post("/api/personas/reset", async (req, res) => {
 
     const personUpdate = req.body;
     console.log("ME LLEGA ESTO DEL FRONT:",personUpdate)
-    Person.updateMany({_id:{$ne:personUpdate._id}}
-        , { $set: { spent: 0, owe: 0 } }) .
+    Person.updateMany({ $set: { spent: 0, owe: 0 } }) .
         then((updatedPersons) => {
             console.log("Updated persons:", updatedPersons);
         }
         );
 
 
-    Person.findByIdAndUpdate(personUpdate.id,{
-                $set:{
-            spent: personUpdate.spent,
-            owe:0
-        }})
-        .then((updatedPerson) => {
-            console.log("Updated person:", updatedPerson);
+        try {
+            const updatedPerson = await Person
+            .findByIdAndUpdate(personUpdate.id, {
+              $inc: { 
+                  spent: parseInt(personUpdate.spent),
+                   owe: parseInt(personUpdate.owe) },
+            });
         
-           return res.status(200).json(updatedPerson);
-
-    
-        
-    }
-    );
+            console.log("Finish update");
+            res.status(200).json(updatedPerson);
+          } catch (error) {
+            console.error("Error al actualizar los valores:", error);
+            res.status(500).json({ error: "Error al actualizar los valores" });
+          }
 });
 
 
