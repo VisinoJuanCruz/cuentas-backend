@@ -77,8 +77,8 @@ app.delete("/api/moves/:id", async (req, res) => {
 
     //Delete move and actualize Person 
     Move.findByIdAndDelete(id).then((deletedMove)=>{
-        Person.findByIdAndUpdate(deletedMove.name,{
-            $inc: { spent: -deletedMove.spent, owe: -deletedMove.owe },
+        Person.findOneAndUpdate({'name':deletedMove.name},{
+            $dec: { spent: deletedMove.spent, owe: deletedMove.owe },
           }).then((updatedPerson)=>{
             res.status(200).json(updatedPerson)
           })
