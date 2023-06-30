@@ -115,8 +115,8 @@ app.post("/api/personas/reset", async (req, res) => {
         .then((updatedPerson) => {
             console.log("Updated person:", updatedPerson);
         
-            res.status(200).json(updatedPerson);
-            
+           return res.status(200).json(updatedPerson);
+
     
         
     }
@@ -171,8 +171,6 @@ app.put("/api/personas/", async (req, res) => {
 
     
 
-    }).then((createdMove)=>{
-        res.status(201).json(createdMove)
     })
 
     try {
