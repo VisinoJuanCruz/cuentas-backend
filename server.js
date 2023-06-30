@@ -104,9 +104,11 @@ app.post("/api/personas/today", async (req, res) => {
       await Person.updateMany({}, { $set: { spent: 0, owe: 0 } });
   
       // Actualizar la persona especificada en req.body.name, estableciendo spent en 0 y owe en req.body.owe
-      await Person.findOneAndUpdate(
-        { name: name },
-        { $set: { spent: 0, owe: owe } }
+      await Person.findOne({ name: name }).then((person) => {
+        person.spent = 0;
+        person.owe = owe;
+        person.save();
+      } 
       );
   
       res.send(`Se actualizó el campo "spent" y "owe" de todas las personas a 0, excepto para ${name} con spent en 0 y owe en ${owe}.`);
