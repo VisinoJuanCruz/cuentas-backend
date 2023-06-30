@@ -97,14 +97,30 @@ app.delete("/api/moves/:id", async (req, res) => {
 
 app.post("/api/personas/reset", async (req, res) => {
 
+    const personUpdate = req.body;
 
-    Person.updateMany({}
+    Person.updateMany({_id:{$ne:personUpdate._id}}
         , { $set: { spent: 0, owe: 0 } }) .
         then((updatedPersons) => {
             console.log("Updated persons:", updatedPersons);
         }
         );
 
+
+    Person.updateOneOne({ _id:personUpdate._id  },{
+        $set:{
+            spent: personUpdate.spent,
+            owe:0
+        }})
+        .then((updatedPerson) => {
+            console.log("Updated person:", updatedPerson);
+        
+            res.status(200).json(updatedPerson);
+            
+    
+        
+    }
+    );
 });
 
 
