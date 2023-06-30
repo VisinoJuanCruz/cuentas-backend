@@ -71,7 +71,21 @@ app.post("/api/moves", async (req, res) => {
     })
 })
 
+app.delete("/api/moves/:id", async (req, res) => {
+    const id = req.params.id
+   
 
+    //Delete move and actualize Person 
+    Move.findByIdAndDelete(id).then((deletedMove)=>{
+        Person.findByIdAndUpdate(deletedMove.name,{
+            $inc: { spent: -deletedMove.spent, owe: -deletedMove.owe },
+          }).then((updatedPerson)=>{
+            res.status(200).json(updatedPerson)
+          })
+    
+
+    })
+});
 
 
 app.post("/api/personas", async (req, res) => {
@@ -99,8 +113,8 @@ app.post("/api/personas", async (req, res) => {
         motive:person.motive,
         date: new Date()
     
-    }).then((createdPerson)=>{
-        res.status(201).json(createdPerson)
+    }).then((createdMove)=>{
+        res.status(201).json(createdMove)
     })
 })
 
