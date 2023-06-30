@@ -98,7 +98,7 @@ app.delete("/api/moves/:id", async (req, res) => {
 app.post("/api/personas/reset", async (req, res) => {
 
     const personUpdate = req.body;
-
+    console.log("ME LLEGA ESTO DEL FRONT:",personUpdate)
     Person.updateMany({_id:{$ne:personUpdate._id}}
         , { $set: { spent: 0, owe: 0 } }) .
         then((updatedPersons) => {
