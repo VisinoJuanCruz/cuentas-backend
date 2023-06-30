@@ -95,9 +95,8 @@ app.delete("/api/moves/:id", async (req, res) => {
     
 });
 
-app.post("/api/personas/today", async (req, res) => {
+app.post("/api/personas/reset", async (req, res) => {
 
-    const { name, owe } = req.body;
 
     Person.updateMany({}
         , { $set: { spent: 0, owe: 0 } }) .
@@ -106,16 +105,6 @@ app.post("/api/personas/today", async (req, res) => {
         }
         );
 
-
-    Person.findOne({ name: name }).then((person) => {
-        person.owe = owe;
-        person.save();
-
-        res.status(200).json(person);
-       
-
-    }
-    );
 });
 
 
