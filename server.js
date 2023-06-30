@@ -103,7 +103,13 @@ app.post("/api/personas/today", async (req, res) => {
       // Actualizar todas las personas, estableciendo spent y owe en 0
       await Person.updateMany({}, { $set: { spent: 0, owe: 0 } });
   
-      
+      // Actualizar la persona especificada en req.body.name, estableciendo spent en 0 y owe en req.body.owe
+      await Person.findOneAndUpdate(
+        { name: name },
+        { $set: { spent: 0, owe: owe } }
+      );
+  
+      res.send(`Se actualizó el campo "spent" y "owe" de todas las personas a 0, excepto para ${name} con spent en 0 y owe en ${owe}.`);
     } catch (error) {
       console.error('Error al resetear las personas:', error);
       res.status(500).send('Error al resetear las personas.');
@@ -163,7 +169,7 @@ app.put("/api/personas/", async (req, res) => {
 
     try {
       const updatedPerson = await Person
-      .findAndUpdate({name:person.name}, {
+      .findByIdAndUpdate(person.id, {
         $inc: { 
             spent: parseInt(person.spent),
              owe: parseInt(person.owe) },
