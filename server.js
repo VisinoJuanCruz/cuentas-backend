@@ -107,7 +107,7 @@ app.post("/api/personas/reset", async (req, res) => {
         );
 
 
-    Person.findByIdAndUpdate(personUpdate._id,{
+    Person.findByIdAndUpdate(personUpdate.id,{
                 $set:{
             spent: personUpdate.spent,
             owe:0
