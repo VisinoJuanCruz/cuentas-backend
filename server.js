@@ -94,7 +94,7 @@ app.delete("/api/moves/:id", async (req, res) => {
 
     
 });
-
+/*
 app.post("/api/personas/reset", async (req, res) => {
 
     const personUpdate = req.body;
@@ -122,7 +122,7 @@ app.post("/api/personas/reset", async (req, res) => {
           }})
 });
 
-
+*/
 
         
     
