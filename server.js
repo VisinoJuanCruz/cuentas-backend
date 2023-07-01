@@ -103,11 +103,11 @@ app.post("/api/personas/reset", async (req, res) => {
         then((updatedPersons) => {
             console.log("Updated persons:", updatedPersons);
         }
-        );
+        ).then(() => {
 
 
         try {
-            const updatedPerson = await Person
+            const updatedPerson = Person
             .findByIdAndUpdate(personUpdate.id, {
               $inc: { 
                   spent: parseInt(personUpdate.spent),
@@ -119,7 +119,7 @@ app.post("/api/personas/reset", async (req, res) => {
           } catch (error) {
             console.error("Error al actualizar los valores:", error);
             res.status(500).json({ error: "Error al actualizar los valores" });
-          }
+          }})
 });
 
 
